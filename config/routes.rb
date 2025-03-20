@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  get "layouts/error_page"
+  get "reservations/error_page"
   get "dashboard/send_reminder"
   get "dashboard/index"
   post 'dashboard/confirmation_mail/:reservation_id', to: 'dashboard#send_confirmation_admin', as: 'send_confirmation'

@@ -34,7 +34,7 @@ class ReservationsController < ApplicationController
       if @reservation.is_booked && @reservation.user_id_book == current_user.id
         render reservations_finalize_reservation_path
       else
-        render layouts_error_page_path, alert: "Echec dans la finalisation de la réservation."
+        redirect_to reservations_error_page_path, alert: "Echec dans la finalisation de la réservation."
 
       end
     end
@@ -58,7 +58,7 @@ class ReservationsController < ApplicationController
       reservation_id = params[:reservation_id]
       reservation = Reservation.find(reservation_id)
       if !reservation || insurance_price == 0 || location_price == 0
-        redirect_to layouts_error_page_path, alert: "Une erreur s'est produite lors du paiement, veuillez réessayer."
+        redirect_to reservations_error_page_path, alert: "Une erreur s'est produite lors du paiement, veuillez réessayer."
       else
         base_price = reservation.price * (reservation.end_date - reservation.start_date).to_i
         total_price = base_price + location_price + insurance_price

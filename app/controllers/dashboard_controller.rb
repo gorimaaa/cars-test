@@ -1,5 +1,4 @@
 class DashboardController < ApplicationController
-  before_action :authenticate_user!
   def index
     @reservations = Reservation.all
   end
@@ -13,7 +12,7 @@ class DashboardController < ApplicationController
       ApplicationMailer.send_confirmation(reservation, user).deliver
       redirect_to dashboard_index_path, notice: "La confirmation a été envoyé."
     else 
-      redirect_to layouts_error_page_path, alert: "Vous n'avez pas les droits pour effectuer cette action."
+      redirect_to reservations_error_page_path, alert: "Vous n'avez pas les droits pour effectuer cette action."
     end
   end
 
@@ -26,7 +25,7 @@ class DashboardController < ApplicationController
       ApplicationMailer.send_reminder_admin(reservation, user).deliver
       redirect_to dashboard_index_path, notice: "Le rappel a été envoyé."
     else
-      redirect_to layouts_error_page_path, alert: "Vous n'avez pas les droits pour effectuer cette action."
+      redirect_to reservations_error_page_path, alert: "Vous n'avez pas les droits pour effectuer cette action."
     end
   end
 
