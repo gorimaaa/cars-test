@@ -1,0 +1,13 @@
+<html>
+<head>
+
+  <%= stylesheet_link_tag "email.css", media: "all" %>
+</head>
+
+
+<body>
+<h1>Confirmation</h1>
+<p>Hello <%= @user.email %></p>
+<p>Your car reservation for a <%= @reservation.car %> at <%= @reservation.location %> has been confirmed, enjoy your ride</p>
+</body>
+</html>
