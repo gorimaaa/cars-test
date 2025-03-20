@@ -1,0 +1,9 @@
+{
+    "tailwindCSS.includeLanguages": {
+      "erb": "html", // Si tu utilises des fichiers .html.erb
+      "css": "css",  // Si tu utilises du CSS ou SCSS
+      "javascript": "javascript" // Si tu utilises du JS avec Tailwind
+    },
+    "tailwindCSS.emmetCompletions": true
+  }
+  
