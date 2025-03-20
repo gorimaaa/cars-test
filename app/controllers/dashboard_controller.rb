@@ -3,7 +3,6 @@ class DashboardController < ApplicationController
     @reservations = Reservation.all
   end
 
-  before_action :authenticate_user!
   def send_confirmation_admin
     if current_user.is_admin
       reservation_id = params[:reservation_id]
@@ -16,7 +15,6 @@ class DashboardController < ApplicationController
     end
   end
 
-  before_action :authenticate_user!
   def send_reminder_admin
     if current_user.is_admin
       reservation_id = params[:reservation_id]
