@@ -9,6 +9,6 @@
 <h1>Reminder</h1>
 <p>Hello <%= @user.email %></p>
 <p>You have a pending booking on our Website for the car <%= @reservation.car %> at <%= @reservation.location %></p>
-<p>Please click here <%= reservations_pay_reservation_url(id_book: @reservation.id) %> to resume your booking.</p>
+<p>Please click here <%= finalize_reservation_url(id_book: @reservation.id) %> to resume your booking.</p>
 </body>
 </html>

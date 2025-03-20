@@ -33,7 +33,7 @@
                   <% if reservation.is_booked %>
                     <span class="text-green-500">Réservée</span>
                   <% else %>
-                    <%= button_to "Réserver", book_reservation_path(reservation), method: :post, class: "bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none" %>
+                    <%= button_to "Réserver", reserve_location_path(reservation), method: :post, class: "bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none" %>
                   <% end %>
                 </td>
               </tr>

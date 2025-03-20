@@ -7,7 +7,7 @@
 
 <body>
 <h1>Reminder</h1>
-<p>Hello <%= @user.email %></p>
+<p>Hello <%= @user.email %> I'm the administrator of roadstr</p>
 <p>You have a pending booking on our Website for the car <%= @reservation.car %> at <%= @reservation.location %></p>
 <p>Please click here <%= pay_book_reservation_url(id_book: @reservation.id) %> to resume your booking.</p>
 </body>
