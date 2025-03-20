@@ -1,0 +1,101 @@
+<% if user_signed_in? %>
+  <% if !current_user.is_admin %>
+    <h1 class="text-3xl font-semibold text-gray-800 mb-6">Liste des voitures de location</h1>
+
+    <% if @reservations.empty? %>
+      <p class="text-center text-xl text-gray-500">Aucune réservation disponible</p>
+    <% else %>
+      <div class="overflow-x-auto shadow-lg rounded-lg">
+        <table class="min-w-full table-auto bg-white border-separate border-spacing-0 rounded-lg">
+          <thead class="bg-blue-600 text-white">
+            <tr>
+              <th class="px-4 py-2 text-left">Id</th>
+              <th class="px-4 py-2 text-left">Voiture</th>
+              <th class="px-4 py-2 text-left">Propriétaire</th>
+              <th class="px-4 py-2 text-left">Lieu</th>
+              <th class="px-4 py-2 text-left">Date de début</th>
+              <th class="px-4 py-2 text-left">Date de fin</th>
+              <th class="px-4 py-2 text-left">Prix</th>
+              <th class="px-4 py-2 text-left">Réservation</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-700">
+            <% @reservations.each do |reservation| %>
+              <tr class="border-b hover:bg-gray-100">
+                <td class="px-4 py-2"><%= reservation.id %></td>
+                <td class="px-4 py-2"><%= reservation.car %></td>
+                <td class="px-4 py-2"><%= reservation.car_owner %></td>
+                <td class="px-4 py-2"><%= reservation.location %></td>
+                <td class="px-4 py-2"><%= reservation.start_date.strftime("%d/%m/%Y") %></td>
+                <td class="px-4 py-2"><%= reservation.end_date.strftime("%d/%m/%Y") %></td>
+                <td class="px-4 py-2"><%= reservation.price %> € / jour</td>
+                <td class="px-4 py-2">
+                  <% if reservation.is_booked %>
+                    <span class="text-green-500">Réservée</span>
+                  <% else %>
+                    <%= button_to "Réserver", book_reservation_path(reservation), method: :post, class: "bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none" %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+
+  <% else %>
+    <h1 class="text-3xl font-semibold text-gray-800 mb-6">Dashboard des réservations</h1>
+
+    <% if @reservations.empty? %>
+      <p class="text-center text-xl text-gray-500">Aucune réservation à afficher</p>
+    <% else %>
+      <div class="overflow-x-auto shadow-lg rounded-lg">
+        <table class="min-w-full table-auto bg-white border-separate border-spacing-0 rounded-lg">
+          <thead class="bg-blue-600 text-white">
+            <tr>
+              <th class="px-4 py-2 text-left">Id</th>
+              <th class="px-4 py-2 text-left">Voiture</th>
+              <th class="px-4 py-2 text-left">Propriétaire</th>
+              <th class="px-4 py-2 text-left">Lieu</th>
+              <th class="px-4 py-2 text-left">Date de début</th>
+              <th class="px-4 py-2 text-left">Date de fin</th>
+              <th class="px-4 py-2 text-left">Prix</th>
+              <th class="px-4 py-2 text-left">Est payé</th>
+              <th class="px-4 py-2 text-left">Rappel</th>
+              <th class="px-4 py-2 text-left">Confirmation</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-700">
+            <% @reservations.each do |reservation| %>
+              <% if reservation.is_booked %>
+                <tr class="border-b hover:bg-gray-100">
+                  <td class="px-4 py-2"><%= reservation.id %></td>
+                  <td class="px-4 py-2"><%= reservation.car %></td>
+                  <td class="px-4 py-2"><%= reservation.car_owner %></td>
+                  <td class="px-4 py-2"><%= reservation.location %></td>
+                  <td class="px-4 py-2"><%= reservation.start_date.strftime("%d/%m/%Y") %></td>
+                  <td class="px-4 py-2"><%= reservation.end_date.strftime("%d/%m/%Y") %></td>
+                  <td class="px-4 py-2"><%= reservation.price %> € / jour</td>
+                  <td class="px-4 py-2"><%= reservation.is_payed ? 'Oui' : 'Non' %></td>
+                  <td class="px-4 py-2">
+                    <% if !reservation.is_payed %>
+                      <%= button_to "Envoyer rappel", send_reminder_admin_path(reservation.id), method: :post, class: "bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none" %>
+                    <% end %>
+                  </td>
+                  <td class="px-4 py-2">
+                    <% if reservation.is_payed %>
+                      <%= button_to "Envoyer confirmation", send_confirmation_path(reservation.id), method: :post, class: "bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none" %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  <% end %>
+
+<% else %>
+  <p class="flex justify-center text-2xl font-bold">Merci de vous connecter pour voir les locations</p>
+<% end %>

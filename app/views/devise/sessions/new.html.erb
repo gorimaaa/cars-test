@@ -1,0 +1,32 @@
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <div class="bg-white shadow-lg rounded-lg p-6 max-w-lg mx-auto">
+
+    <!-- Champ Email -->
+    <div class="mb-4">
+      <%= f.label :email, class: "block text-lg font-medium text-gray-700" %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w-full p-3 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+
+    <!-- Champ Mot de passe -->
+    <div class="mb-4">
+      <%= f.label :password, class: "block text-lg font-medium text-gray-700" %>
+      <%= f.password_field :password, autocomplete: "current-password", class: "w-full p-3 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+
+    <!-- Option "Se souvenir de moi" -->
+    <% if devise_mapping.rememberable? %>
+      <div class="mb-6 flex items-center">
+        <%= f.check_box :remember_me, class: "h-4 w-4 text-blue-500 focus:ring-blue-500 border-gray-300 rounded" %>
+        <%= f.label :remember_me, class: "ml-2 text-sm text-gray-700" %>
+      </div>
+    <% end %>
+
+    <!-- Bouton de soumission -->
+    <div class="flex justify-center mb-4">
+      <%= f.submit "Log in", class: "bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    </div>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>
