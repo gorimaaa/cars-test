@@ -1,0 +1,51 @@
+<% if user_signed_in? %>
+  <h1 class="text-3xl font-semibold text-gray-800 mb-6">Liste de vos réservations</h1>
+
+  <div class="overflow-x-auto shadow-lg rounded-lg">
+    <table class="min-w-full table-auto bg-white border-separate border-spacing-0 rounded-lg">
+      <thead class="bg-blue-600 text-white">
+        <tr>
+          <th class="px-4 py-2 text-left">Id</th>
+          <th class="px-4 py-2 text-left">Voiture</th>
+          <th class="px-4 py-2 text-left">Propriétaire</th>
+          <th class="px-4 py-2 text-left">Lieu</th>
+          <th class="px-4 py-2 text-left">Date de début</th>
+          <th class="px-4 py-2 text-left">Date de fin</th>
+          <th class="px-4 py-2 text-left">Prix</th>
+          <th class="px-4 py-2 text-left">Paiement effectué</th>
+          <th class="px-4 py-2 text-left">Annulation</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-700">
+        <% @reservations.each do |reservation| %>
+          <% if reservation.is_booked && reservation.user_id_book == current_user.id %>
+            <tr class="border-b hover:bg-gray-100">
+              <td class="px-4 py-2"><%= reservation.id %></td>
+              <td class="px-4 py-2"><%= reservation.car %></td>
+              <td class="px-4 py-2"><%= reservation.car_owner %></td>
+              <td class="px-4 py-2"><%= reservation.location %></td>
+              <td class="px-4 py-2"><%= reservation.start_date.strftime("%d/%m/%Y") %></td>
+              <td class="px-4 py-2"><%= reservation.end_date.strftime("%d/%m/%Y") %></td>
+              <td class="px-4 py-2"><%= reservation.price %> € / jour</td>
+              <td class="px-4 py-2">
+                <% if reservation.is_payed %>
+                  <span class="text-green-500">Oui</span>
+                <% else %>
+                  <span class="text-red-500">Non</span>
+                <% end %>
+              </td>
+              <td class="px-4 py-2">
+                <% if !reservation.is_payed %>
+                  <%= button_to "Annuler", cancel_book_reservation_path(reservation), method: :post, class: "bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500" %>
+                <% else %>
+                  <span class="text-gray-400">Non disponible</span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+<% end %>
